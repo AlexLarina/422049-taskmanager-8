@@ -21,44 +21,46 @@ const createFiltersTemplate = (filters) => (
     .join(``)
 );
 
-const createControlTemplate = (controls) => (
-  `<div class="card__control">` +
-  controls
-    .map((control) => (
-    `<button type="button" class="card__btn card__btn--${control.name} ${control.isDisabled}">
-          ${control.name}
-    </button>`
-    ))
-    .join(``) +
-    `</div>`
-);
+const createControlTemplate = (controls) => {
+  const controlsTemplate = controls
+  .map((control) => (
+  `<button type="button" class="card__btn card__btn--${control.name} ${control.isDisabled}">
+        ${control.name}
+  </button>`
+  ))
+  .join(``);
 
-const createTaskDescriptionTemplate = (task) => `
+  return (
+    `<div class="card__control">${controlsTemplate}</div>`
+  );
+};
+
+const createCardDescriptionTemplate = (card) => `
   <div class="card__textarea-wrap">
     <label>
       <textarea
         class="card__text"
         placeholder="Start typing your text here..."
-        name="text">${task.text}</textarea>
+        name="text">${card.text}</textarea>
     </label>
   </div>
   `
 ;
 
-const createColorBarTemplate = (task) => (
+const createColorBarTemplate = (card) => (
   `<div class="card__color-bar">
-    <svg class="card__color-bar-${task.colorSetting}" width="100%" height="10">
+    <svg class="card__color-bar-${card.colorSetting}" width="100%" height="10">
       <use xlink:href="#wave"></use>
     </svg>
   </div>`
 );
 
-const createTaskDeadlineTemplate = (task) =>  (`
+const createCardDeadlineTemplate = (card) =>  (`
   <button class="card__date-deadline-toggle" type="button">
-    date: <span class="card__date-status">${task.deadline.status}</span>
+    date: <span class="card__date-status">${card.deadline.status}</span>
   </button>
   <fieldset class="card__date-deadline" ` +
-  ((task.deadline.status === `no`) ? `disabled` : ``) +
+  ((card.deadline.status === `no`) ? `disabled` : ``) +
   `>
     <label class="card__input-deadline-wrap">
       <input
@@ -66,7 +68,7 @@ const createTaskDeadlineTemplate = (task) =>  (`
         type="text"
         placeholder="23 September"
         name="date"
-        value="${task.deadline.date}"
+        value="${card.deadline.date}"
       />
     </label>
     <label class="card__input-deadline-wrap">
@@ -75,22 +77,22 @@ const createTaskDeadlineTemplate = (task) =>  (`
         type="text"
         placeholder="11:15 PM"
         name="time"
-        value="${task.deadline.time}"
+        value="${card.deadline.time}"
       />
     </label>
   </fieldset>`
 );
 
-const createRepeatingTaskTemplate = (task) => (`
+const createRepeatingCardTemplate = (card) => (`
   <button class="card__repeat-toggle" type="button">
     repeat:<span class="card__repeat-status">yes</span>
   </button>
 
   <fieldset class="card__repeat-days"` +
-  ((task.isRepeat === `repeat`) ? `` : `disabled`) +
+  ((card.isRepeat === `repeat`) ? `` : `disabled`) +
   `>
     <div class="card__repeat-days-inner">` +
-    task.days
+    card.days
     .map((day) => (
       `<input
         class="visually-hidden card__repeat-day-input"
@@ -108,11 +110,11 @@ const createRepeatingTaskTemplate = (task) => (`
   </fieldset>`
 );
 
-const createTaskDatesTemplate = (task) => (`
-  <div class="card__dates">` +
-    createTaskDeadlineTemplate(task) +
-    createRepeatingTaskTemplate(task) +
-  `</div>`
+const createCardDatesTemplate = (card) => (`
+  <div class="card__dates">
+    ${createCardDeadlineTemplate(card)}
+    ${createRepeatingCardTemplate(card)}
+  </div>`
 );
 
 const createHashtagBtnTemplate = (name) => `
@@ -124,10 +126,10 @@ const createHashtagBtnTemplate = (name) => `
   </button>
 `;
 
-const createHashtagTemplate = (task) => (
+const createHashtagTemplate = (card) => (
   `<div class="card__hashtag">
     <div class="card__hashtag-list">`+
-      task.hashtags.map((hashtag) => (
+      card.hashtags.map((hashtag) => (
         `<span class="card__hashtag-inner">
           <input
             type="hidden"
@@ -150,15 +152,15 @@ const createHashtagTemplate = (task) => (
   </div>`
 );
 
-const createTaskDetailsTemplate = (task) => (`
-  <div class="card__details">` +
-    createTaskDatesTemplate(task) +
-    createHashtagTemplate(task) +
-  `</div>
+const createCardDetailsTemplate = (card) => (`
+  <div class="card__details"> +
+    ${createCardDatesTemplate(card)}
+    ${createHashtagTemplate(card)}
+  </div>
 `
 );
 
-const createTaskPictureTemplate  = (task) => (`
+const createCardPictureTemplate  = (card) => (`
   <label class="card__img-wrap">
     <input
       type="file"
@@ -166,7 +168,7 @@ const createTaskPictureTemplate  = (task) => (`
       name="img"
     />
     <img
-      src="${task.imgSource}"
+      src="${card.imgSource}"
       alt="task picture"
       class="card__img"
     />
@@ -174,11 +176,11 @@ const createTaskPictureTemplate  = (task) => (`
 `
 );
 
-const createTaskColorsTemplate = (task) => (`
+const createCardColorsTemplate = (card) => (`
   <div class="card__colors-inner">
     <h3 class="card__colors-title">Color</h3>
     <div class="card__colors-wrap">`+
-      task.colors.map((color) => (
+      card.colors.map((color) => (
         `<input
           type="radio"
           id="color-${color}-4"
@@ -197,41 +199,39 @@ const createTaskColorsTemplate = (task) => (`
 `
 );
 
-const createTaskSettingsTemplate = (task) => (`
-  <div class="card__settings">` +
-    createTaskDetailsTemplate(task) +
-    createTaskPictureTemplate(task) +
-    createTaskColorsTemplate(task) +
-  `</div>
+const createCardSettingsTemplate = (card) => (`
+  <div class="card__settings">
+    ${createCardDetailsTemplate(card)}
+    ${createCardPictureTemplate(card)}
+    ${createCardColorsTemplate(card)}
+  </div>
 `
 );
 
-const createTaskStatusBtnTemplate = () => (`
+const createCardStatusBtnTemplate = () => (`
   <div class="card__status-btns">
     <button class="card__save" type="submit">save</button>
     <button class="card__delete" type="button">delete</button>
   </div>
 `);
 
-const createTasksTemplate = (tasks) => (
-  tasks
-    .map((task) => (
-      `<article class="card card--${task.isEdit} card--${task.color} card--${task.isRepeat} card--${task.isDeadline}">
+const createCardsTemplate = (cards) => (
+  cards
+    .map((card) => (
+      `<article class="card card--${card.isEdit} card--${card.color} card--${card.isRepeat} card--${card.isDeadline}">
         <form class="card__form" method="get">
-          <div class="card__inner">` +
-            createControlTemplate(buttons) +
-            createColorBarTemplate(task) +
-            createTaskDescriptionTemplate(task) +
-            createTaskSettingsTemplate(task) +
-            createTaskStatusBtnTemplate() +
-          `</div>
+          <div class="card__inner">
+            ${createControlTemplate(buttons)}
+            ${createColorBarTemplate(card)}
+            ${createCardDescriptionTemplate(card)}
+            ${createCardSettingsTemplate(card)}
+            ${createCardStatusBtnTemplate()}
+          </div>
         </form>
       </article>`
     ))
     .join(``)
 );
-
-/* data */
 
 const filters = [
   {
@@ -266,7 +266,7 @@ const filters = [
   }
 ];
 
-const tasks = [
+const cards = [
   {
     text: `This is example of new task, you can add picture, set date and time, add tags.`,
     deadline: {
@@ -392,10 +392,8 @@ const buttons = [
   }
 ]
 
-/* function */
-
 const filterContainerElement = document.querySelector('.main__filter');
-const tasksContainerElement = document.querySelector('.board__tasks');
+const cardsContainerElement = document.querySelector('.board__tasks');
 
 filterContainerElement.innerHTML = createFiltersTemplate(filters);
-tasksContainerElement.innerHTML = createTasksTemplate(tasks);
+cardsContainerElement.innerHTML = createCardsTemplate(cards);
