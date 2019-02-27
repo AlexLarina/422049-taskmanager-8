@@ -1,4 +1,6 @@
-import {createRandomNumberRange, createFiltersTemplate, createCardsTemplate} from './utils.js'
+import {createRandomNumberRange} from './utils.js'
+import {createFiltersTemplate} from '../src/template/filters'
+import {createCardsTemplate} from '../src/template/cards'
 
 const filters = [
   {

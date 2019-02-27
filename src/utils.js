@@ -1,26 +1,9 @@
 const createRandomNumberRange = (min = 0, max = 100) => Math.floor(Math.random() * (max - min)) + min;
 
-const createFiltersTemplate = (filters) => (
-  filters
-    .map((filter) => (
-      `<label for="${filter.id}" class="filter__label">
-        ${filter.name.toUpperCase()} <span class="filter__all-count">${filter.count}</span>
-      </label>
-      <input
-        type="radio"
-        id="filter__${filter.name}"
-        class="filter__input visually-hidden"
-        name="filter"
-        ${filter.state}
-      />`
-    ))
-    .join(``)
-);
-
 const createControlTemplate = (controls) => {
   const controlsTemplate = controls
   .map((control) => (
-  `<button type="button" class="card__btn card__btn--${control.name} ${control.isDisabled}">
+    `<button type="button" class="card__btn card__btn--${control.name} ${control.isDisabled}">
         ${control.name}
   </button>`
   ))
@@ -51,7 +34,7 @@ const createColorBarTemplate = (card) => (
   </div>`
 );
 
-const createCardDeadlineTemplate = (card) =>  (`
+const createCardDeadlineTemplate = (card) => (`
   <button class="card__date-deadline-toggle" type="button">
     date: <span class="card__date-status">${card.deadline.status}</span>
   </button>
@@ -124,7 +107,7 @@ const createHashtagBtnTemplate = (name) => `
 
 const createHashtagTemplate = (card) => (
   `<div class="card__hashtag">
-    <div class="card__hashtag-list">`+
+    <div class="card__hashtag-list">` +
       card.hashtags.map((hashtag) => (
         `<span class="card__hashtag-inner">
           <input
@@ -156,7 +139,7 @@ const createCardDetailsTemplate = (card) => (`
 `
 );
 
-const createCardPictureTemplate  = (card) => (`
+const createCardPictureTemplate = (card) => (`
   <label class="card__img-wrap">
     <input
       type="file"
@@ -175,7 +158,7 @@ const createCardPictureTemplate  = (card) => (`
 const createCardColorsTemplate = (card) => (`
   <div class="card__colors-inner">
     <h3 class="card__colors-title">Color</h3>
-    <div class="card__colors-wrap">`+
+    <div class="card__colors-wrap">` +
       card.colors.map((color) => (
         `<input
           type="radio"
@@ -211,22 +194,5 @@ const createCardStatusBtnTemplate = () => (`
   </div>
 `);
 
-const createCardsTemplate = (cards, buttons) => (
-  cards
-    .map((card) => (
-      `<article class="card card--${card.isEdit} card--${card.color} card--${card.isRepeat} card--${card.isDeadline}">
-        <form class="card__form" method="get">
-          <div class="card__inner">
-            ${createControlTemplate(buttons)}
-            ${createColorBarTemplate(card)}
-            ${createCardDescriptionTemplate(card)}
-            ${createCardSettingsTemplate(card)}
-            ${createCardStatusBtnTemplate()}
-          </div>
-        </form>
-      </article>`
-    ))
-    .join(``)
-);
-
-export {createRandomNumberRange, createFiltersTemplate, createCardsTemplate};
+export {createRandomNumberRange, createControlTemplate, createCardDescriptionTemplate,
+  createColorBarTemplate, createCardSettingsTemplate, createCardStatusBtnTemplate};
