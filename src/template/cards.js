@@ -36,9 +36,9 @@ const createCardDeadlineTemplate = (card) => (`
   <button class="card__date-deadline-toggle" type="button">
     date: <span class="card__date-status">${card.deadline.status}</span>
   </button>
-  <fieldset class="card__date-deadline" ` +
-  ((card.deadline.status === `no`) ? `disabled` : ``) +
-  `>
+  <fieldset class="card__date-deadline"
+  ${((card.deadline.status === `no`) ? `disabled` : ``)}
+  >
     <label class="card__input-deadline-wrap">
       <input
         class="card__date"
@@ -65,11 +65,11 @@ const createRepeatingCardTemplate = (card) => (`
     repeat:<span class="card__repeat-status">yes</span>
   </button>
 
-  <fieldset class="card__repeat-days"` +
-  ((card.isRepeat === `repeat`) ? `` : `disabled`) +
-  `>
-    <div class="card__repeat-days-inner">` +
-    card.days
+  <fieldset class="card__repeat-days"
+  ${((card.isRepeat === `repeat`) ? `` : `disabled`)}
+  >
+    <div class="card__repeat-days-inner">
+    ${card.days
     .map((day) => (
       `<input
         class="visually-hidden card__repeat-day-input"
@@ -82,8 +82,8 @@ const createRepeatingCardTemplate = (card) => (`
         >${day}</label
       >`
     ))
-    .join(``) +
-    `</div>
+    .join(``)}
+    </div>
   </fieldset>`
 );
 
@@ -105,18 +105,18 @@ const createHashtagBtnTemplate = (name) => `
 
 const createHashtagTemplate = (card) => (
   `<div class="card__hashtag">
-    <div class="card__hashtag-list">` +
-      card.hashtags.map((hashtag) => (
-        `<span class="card__hashtag-inner">
-          <input
-            type="hidden"
-            name="hashtag"
-            value="${hashtag}"
-            class="card__hashtag-hidden-input"
-          />` +
-          createHashtagBtnTemplate(hashtag) +
-        `</span>`
-      )).join(``) + `
+    <div class="card__hashtag-list">
+      ${card.hashtags.map((hashtag) => (
+    `<span class="card__hashtag-inner">
+      <input
+        type="hidden"
+        name="hashtag"
+        value="${hashtag}"
+        class="card__hashtag-hidden-input"
+      />
+      ${createHashtagBtnTemplate(hashtag)}
+    </span>`
+  )).join(``)}
     </div>
     <label>
       <input
@@ -130,7 +130,7 @@ const createHashtagTemplate = (card) => (
 );
 
 const createCardDetailsTemplate = (card) => (`
-  <div class="card__details"> +
+  <div class="card__details">
     ${createCardDatesTemplate(card)}
     ${createHashtagTemplate(card)}
   </div>
@@ -156,22 +156,22 @@ const createCardPictureTemplate = (card) => (`
 const createCardColorsTemplate = (card) => (`
   <div class="card__colors-inner">
     <h3 class="card__colors-title">Color</h3>
-    <div class="card__colors-wrap">` +
-      card.colors.map((color) => (
-        `<input
-          type="radio"
-          id="color-${color}-4"
-          class="card__color-input card__color-input--${color} visually-hidden"
-          name="color"
-          value="${color}"
-        />
-        <label
-          for="color-${color}-4"
-          class="card__color card__color--${color}"
-          >${color}</label
-        >`
-      )).join(``) +
-    `</div>
+    <div class="card__colors-wrap">
+      ${card.colors.map((color) => (
+    `<input
+      type="radio"
+      id="color-${color}-4"
+      class="card__color-input card__color-input--${color} visually-hidden"
+      name="color"
+      value="${color}"
+    />
+    <label
+      for="color-${color}-4"
+      class="card__color card__color--${color}"
+      >${color}</label
+    >`
+  )).join(``)}
+    </div>
   </div>
 `
 );
