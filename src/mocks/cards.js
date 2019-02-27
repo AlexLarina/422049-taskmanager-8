@@ -1,3 +1,27 @@
+import {createRandomNumberRange} from './filters';
+
+const chooseRandElements = (length, array, unique) => {
+  const newArr = [];
+
+  while (newArr.length < length) {
+    const elem = array[createRandomNumberRange(0, array.length - 1)];
+
+    if (unique && newArr.indexOf(elem) !== -1) {
+      continue;
+    } else {
+      newArr.push(elem);
+    }
+  }
+
+  return newArr;
+};
+
+const cardParams = {
+  DAYS: [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`],
+  COLORS: [`black`, `yellow`, `blue`, `green`, `pink`],
+  HASHTAGS: [`repeat`, `cinema`, `entertaiment`]
+};
+
 export const cards = [
   {
     text: `This is example of new task, you can add picture, set date and time, add tags.`,
@@ -11,11 +35,11 @@ export const cards = [
     isDeadline: ``,
     color: `black`,
     repeatStatus: `disabled`,
-    days: [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`],
+    days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
     colorSetting: ``,
-    hashtags: [],
+    hashtags: chooseRandElements(createRandomNumberRange(0, cardParams.HASHTAGS.length), cardParams.HASHTAGS, true),
     imgSource: `img/add-photo.svg`,
-    colors: [`black`, `yellow`, `blue`, `green`, `pink`]
+    colors: chooseRandElements(createRandomNumberRange(0, cardParams.COLORS.length), cardParams.COLORS, true)
   },
   {
     text: `It is example of repeating task. It marks by wave.`,
@@ -29,11 +53,11 @@ export const cards = [
     isDeadline: ``,
     color: `pink`,
     repeatStatus: `disabled`,
-    days: [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`],
+    days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
     colorSetting: `wave`,
-    hashtags: [`repeat`, `cinema`, `entertaiment`],
+    hashtags: chooseRandElements(createRandomNumberRange(0, cardParams.HASHTAGS.length), cardParams.HASHTAGS, true),
     imgSource: `img/add-photo.svg`,
-    colors: [`black`, `yellow`, `blue`, `green`, `pink`]
+    colors: chooseRandElements(createRandomNumberRange(0, cardParams.COLORS.length), cardParams.COLORS, true)
   },
   {
     text: `This is card with missing deadline`,
@@ -47,11 +71,11 @@ export const cards = [
     isDeadline: `deadline`,
     color: `yellow`,
     repeatStatus: `disabled`,
-    days: [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`],
+    days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
     colorSetting: `wave`,
-    hashtags: [`cinema`, `entertaiment`],
+    hashtags: chooseRandElements(createRandomNumberRange(0, cardParams.HASHTAGS.length), cardParams.HASHTAGS, true),
     imgSource: `img/add-photo.svg`,
-    colors: [`black`, `yellow`, `blue`, `green`, `pink`]
+    colors: chooseRandElements(createRandomNumberRange(0, cardParams.COLORS.length), cardParams.COLORS, true)
   },
   {
     text: `Here is a card with filled data`,
@@ -65,11 +89,11 @@ export const cards = [
     isDeadline: ``,
     color: `yellow`,
     repeatStatus: `disabled`,
-    days: [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`],
+    days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
     colorSetting: `wave`,
-    hashtags: [`repeat`, `cinema`, `entertaiment`],
+    hashtags: chooseRandElements(createRandomNumberRange(0, cardParams.HASHTAGS.length), cardParams.HASHTAGS, true),
     imgSource: `img/sample-img.jpg`,
-    colors: [`black`, `yellow`, `blue`, `green`, `pink`]
+    colors: chooseRandElements(createRandomNumberRange(0, cardParams.COLORS.length), cardParams.COLORS, true)
   },
   {
     text: ``,
@@ -83,11 +107,11 @@ export const cards = [
     isDeadline: ``,
     color: `blue`,
     repeatStatus: `disabled`,
-    days: [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`],
+    days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
     colorSetting: `wave`,
-    hashtags: [`repeat`, `cinema`, `entertaiment`],
+    hashtags: chooseRandElements(createRandomNumberRange(0, cardParams.HASHTAGS.length), cardParams.HASHTAGS, true),
     imgSource: `img/add-photo.svg`,
-    colors: [`black`, `yellow`, `blue`, `green`, `pink`]
+    colors: chooseRandElements(createRandomNumberRange(0, cardParams.COLORS.length), cardParams.COLORS, true)
   },
   {
     text: ``,
@@ -101,11 +125,11 @@ export const cards = [
     isDeadline: ``,
     color: `blue`,
     repeatStatus: `disabled`,
-    days: [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`],
+    days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
     colorSetting: `wave`,
-    hashtags: [`repeat`, `cinema`, `entertaiment`],
+    hashtags: chooseRandElements(createRandomNumberRange(0, cardParams.HASHTAGS.length), cardParams.HASHTAGS, true),
     imgSource: `img/sample-img.jpg`,
-    colors: [`black`, `yellow`, `blue`, `green`, `pink`]
+    colors: chooseRandElements(createRandomNumberRange(0, cardParams.COLORS.length), cardParams.COLORS, true)
   }
 ];
 
