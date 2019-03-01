@@ -1,5 +1,7 @@
 import {createRandomNumberRange} from './filters';
 
+const getRandomBoolean = () => (Math.random() > 0.5) ? true : false;
+
 const chooseRandElements = (length, array, unique) => {
   const newArr = [];
 
@@ -17,6 +19,12 @@ const chooseRandElements = (length, array, unique) => {
 };
 
 const cardParams = {
+  TITLES: [
+    `This is example of new task, you can add picture, set date and time, add tags.`,
+    `It is example of repeating task. It marks by wave.`,
+    `This is card with missing deadline`,
+    `Here is a card with filled data`
+  ],
   DAYS: [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`],
   COLORS: [`black`, `yellow`, `blue`, `green`, `pink`],
   HASHTAGS: [`repeat`, `cinema`, `entertaiment`]
@@ -24,15 +32,15 @@ const cardParams = {
 
 export const cards = [
   {
-    text: `This is example of new task, you can add picture, set date and time, add tags.`,
+    text: cardParams.TITLES[0],
     deadline: {
       status: `no`,
       date: ``,
       time: ``
     },
-    isRepeat: `repeat`,
-    isEdit: `edit`,
-    isDeadline: ``,
+    isRepeat: getRandomBoolean(),
+    isEdit: getRandomBoolean(),
+    isDeadline: getRandomBoolean(),
     color: cardParams.COLORS[createRandomNumberRange(0, cardParams.COLORS.length)],
     repeatStatus: `disabled`,
     days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
@@ -42,15 +50,15 @@ export const cards = [
     colors: chooseRandElements(createRandomNumberRange(0, cardParams.COLORS.length), cardParams.COLORS, true)
   },
   {
-    text: `It is example of repeating task. It marks by wave.`,
+    text: cardParams.TITLES[1],
     deadline: {
       status: `no`,
       date: ``,
       time: ``
     },
-    isRepeat: `repeat`,
-    isEdit: ``,
-    isDeadline: ``,
+    isRepeat: getRandomBoolean(),
+    isEdit: getRandomBoolean(),
+    isDeadline: getRandomBoolean(),
     color: cardParams.COLORS[createRandomNumberRange(0, cardParams.COLORS.length)],
     repeatStatus: `disabled`,
     days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
@@ -60,15 +68,15 @@ export const cards = [
     colors: chooseRandElements(createRandomNumberRange(0, cardParams.COLORS.length), cardParams.COLORS, true)
   },
   {
-    text: `This is card with missing deadline`,
+    text: cardParams.TITLES[2],
     deadline: {
       status: `no`,
       date: ``,
       time: ``
     },
-    isRepeat: ``,
-    isEdit: ``,
-    isDeadline: `deadline`,
+    isRepeat: getRandomBoolean(),
+    isEdit: getRandomBoolean(),
+    isDeadline: getRandomBoolean(),
     color: cardParams.COLORS[createRandomNumberRange(0, cardParams.COLORS.length)],
     repeatStatus: `disabled`,
     days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
@@ -78,15 +86,15 @@ export const cards = [
     colors: chooseRandElements(createRandomNumberRange(0, cardParams.COLORS.length), cardParams.COLORS, true)
   },
   {
-    text: `Here is a card with filled data`,
+    text: cardParams.TITLES[3],
     deadline: {
       status: `yes`,
       date: `23 September`,
       time: `11:15 PM`
     },
-    isRepeat: `repeat`,
-    isEdit: `edit`,
-    isDeadline: ``,
+    isRepeat: getRandomBoolean(),
+    isEdit: getRandomBoolean(),
+    isDeadline: getRandomBoolean(),
     color: cardParams.COLORS[createRandomNumberRange(0, cardParams.COLORS.length)],
     repeatStatus: `disabled`,
     days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
@@ -102,9 +110,9 @@ export const cards = [
       date: ``,
       time: ``
     },
-    isRepeat: ``,
-    isEdit: ``,
-    isDeadline: ``,
+    isRepeat: getRandomBoolean(),
+    isEdit: getRandomBoolean(),
+    isDeadline: getRandomBoolean(),
     color: cardParams.COLORS[createRandomNumberRange(0, cardParams.COLORS.length)],
     repeatStatus: `disabled`,
     days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),
@@ -120,9 +128,9 @@ export const cards = [
       date: ``,
       time: ``
     },
-    isRepeat: ``,
-    isEdit: ``,
-    isDeadline: ``,
+    isRepeat: getRandomBoolean(),
+    isEdit: getRandomBoolean(),
+    isDeadline: getRandomBoolean(),
     color: cardParams.COLORS[createRandomNumberRange(0, cardParams.COLORS.length)],
     repeatStatus: `disabled`,
     days: chooseRandElements(createRandomNumberRange(1, cardParams.DAYS.length), cardParams.DAYS, true),

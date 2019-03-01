@@ -1,7 +1,7 @@
 const createControlTemplate = (controls) => {
   const controlsTemplate = controls
   .map((control) => (
-    `<button type="button" class="card__btn card__btn--${control.name} ${control.isDisabled}">
+    `<button type="button" class="card__btn card__btn--${control.name} ${(control.isDisabled) ? `` : ``}">
         ${control.name}
   </button>`
   ))
@@ -62,11 +62,11 @@ const createCardDeadlineTemplate = (card) => (`
 
 const createRepeatingCardTemplate = (card) => (`
   <button class="card__repeat-toggle" type="button">
-    repeat:<span class="card__repeat-status">yes</span>
+    repeat:<span class="card__repeat-status">${((card.isRepeat) ? `yes` : `no`)}</span>
   </button>
 
   <fieldset class="card__repeat-days"
-  ${((card.isRepeat === `repeat`) ? `` : `disabled`)}
+  ${((card.isRepeat) ? `` : `disabled`)}
   >
     <div class="card__repeat-days-inner">
     ${card.days
@@ -195,7 +195,7 @@ const createCardStatusBtnTemplate = () => (`
 export const createCardsTemplate = (cards, buttons) => (
   cards
     .map((card) => (
-      `<article class="card card--${card.isEdit} card--${card.color} card--${card.isRepeat} card--${card.isDeadline}">
+      `<article class="card ${(card.isEdit) ? `card--edit` : ``} card--${card.color} ${(card.isRepeat) ? `card--repeat` : ``} ${(card.isDeadline) ? `card--deadline` : ``}">
         <form class="card__form" method="get">
           <div class="card__inner">
             ${createControlTemplate(buttons)}
