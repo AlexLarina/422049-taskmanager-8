@@ -1,10 +1,10 @@
 export const createRandomNumberRange = (min = 0, max = 100) => Math.floor(Math.random() * (max - min)) + min;
 
-const filterNames = [`all`, `overdue`, `today`, `favourites`, `tags`, `archive`];
-const filterStates = [`checked`, `disabled`, ``];
+const names = [`all`, `overdue`, `today`, `favourites`, `tags`, `archive`];
+const states = [`checked`, `disabled`, ``];
 
-export const filters = filterNames.map((filterName) => ({
+export const filters = names.map((filterName) => ({
   name: filterName,
-  state: filterStates[createRandomNumberRange(0, filterStates.length - 1)],
+  state: states[createRandomNumberRange(0, states.length - 1)],
   count: createRandomNumberRange()
 }));

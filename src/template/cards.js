@@ -62,11 +62,11 @@ const createCardDeadlineTemplate = (card) => (`
 
 const createRepeatingCardTemplate = (card) => (`
   <button class="card__repeat-toggle" type="button">
-    repeat:<span class="card__repeat-status">${((card.isRepeat) ? `yes` : `no`)}</span>
+    repeat:<span class="card__repeat-status">${(card.isRepeat) ? `yes` : `no`}</span>
   </button>
 
   <fieldset class="card__repeat-days"
-  ${((card.isRepeat) ? `` : `disabled`)}
+  ${(card.isRepeat) ? `` : `disabled`}
   >
     <div class="card__repeat-days-inner">
     ${card.days
