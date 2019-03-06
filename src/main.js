@@ -7,7 +7,7 @@ import {createFilters} from '../src/mocks/filters';
 const CARDS_LIMIT = 6;
 
 const cards = createCards(CARDS_LIMIT);
-const fitlers = createFilters()
+const filters = createFilters();
 
 const filterContainerElement = document.querySelector(`.main__filter`);
 const cardsContainerElement = document.querySelector(`.board__tasks`);

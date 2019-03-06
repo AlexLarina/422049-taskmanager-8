@@ -1,6 +1,3 @@
-
-
-
 const createControlTemplate = () => {
   const controls = [
     {
@@ -86,7 +83,7 @@ const createRepeatingDaysTemplate = (card, index) => (
   <fieldset class="card__repeat-days" ${card.isRepeat ? `` : `disabled`}>
     <div class="card__repeat-days-inner">
     ${card.days.map((day) => (
-      `<input
+    `<input
         class="visually-hidden card__repeat-day-input"
         type="checkbox"
         id="repeat-${day}-${index}"
@@ -95,13 +92,13 @@ const createRepeatingDaysTemplate = (card, index) => (
       />
       <label class="card__repeat-day" for="repeat-${day}-${index}">${day}</label
       >`
-    ))
+  ))
     .join(``)}
     </div>
   </fieldset>`
 );
 
-const createDatesTemplate = (card, index) => (`
+const createDatesTemplate = (card) => (`
   <div class="card__dates">
     ${createDeadlineTemplate(card)}
     ${createRepeatingDaysTemplate(card)}
@@ -133,7 +130,7 @@ const createHashtagTemplate = (card) => (
         </span>`
         ))
         .join(``)
-      }
+  }
     </div>
     <label>
       <input
@@ -188,7 +185,7 @@ const createColorsTemplate = (card) => (`
           >`
         ))
         .join(``)
-      }
+  }
     </div>
   </div>
 `);

@@ -2,10 +2,10 @@ import {
   getRandomArrayItem,
   getRandomBoolean,
   createRandomNumber,
-  chooseRandomArrayItems // @MAYBE
-} from './random';
+  chooseRandomArrayItems
+} from '../random';
 
-const cardParams = { // @TODO
+const cardParams = {
   TITLES: [
     `This is example of new task, you can add picture, set date and time, add tags.`,
     `It is example of repeating task. It marks by wave.`,
@@ -18,7 +18,7 @@ const cardParams = { // @TODO
 };
 
 export const createCards = (limit) => (
-  [...(new Array(limit)).keys()].map(() => ({ // @NOTICE
+  [...(new Array(limit)).keys()].map(() => ({
     text: getRandomArrayItem(cardParams.TITLES),
     deadline: {
       status: `no`,
@@ -32,8 +32,8 @@ export const createCards = (limit) => (
     repeatStatus: `disabled`,
     days: chooseRandomArrayItems(cardParams.DAYS, createRandomNumber(1, cardParams.DAYS.length - 1)),
     colorSetting: ``,
-    hashtags: chooseRandomArrayItems(createRandomNumber(0, cardParams.HASHTAGS.length), cardParams.HASHTAGS, true),
+    hashtags: chooseRandomArrayItems(cardParams.HASHTAGS, createRandomNumber(0, cardParams.HASHTAGS.length)),
     imgSource: `img/add-photo.svg`,
-    colors: chooseRandomArrayItems(createRandomNumber(0, cardParams.COLORS.length), cardParams.COLORS, true)
+    colors: chooseRandomArrayItems(cardParams.COLORS, createRandomNumber(0, cardParams.COLORS.length))
   }))
 );

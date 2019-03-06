@@ -1,10 +1,10 @@
 import {getRandomArrayItem, createRandomNumber} from '../random';
 
-const names = [`all`, `overdue`, `today`, `favourites`, `tags`, `archive`]; // @NOTICE
-const states = [`checked`, `disabled`, ``]; // @NOTICE
+const NAMES = [`all`, `overdue`, `today`, `favourites`, `tags`, `archive`];
+const STATES = [`checked`, `disabled`, ``];
 
-export const createFilters = () => names.map((name) => ({
+export const createFilters = () => NAMES.map((name) => ({
   name,
-  state: getRandomArrayItem(states),
+  state: getRandomArrayItem(STATES),
   count: createRandomNumber()
 }));
