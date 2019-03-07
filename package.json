@@ -23,8 +23,5 @@
   },
   "engines": {
     "node": "10"
-  },
-  "dependencies": {
-    "path": "^0.12.7"
   }
 }
