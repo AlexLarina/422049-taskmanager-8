@@ -24,6 +24,7 @@ const TAG_NUMBER = {
   MAX: 3
 };
 const COLORS = [`black`, `yellow`, `blue`, `green`, `pink`];
+const DAYS = [`Mo`, `Tu`, `We`, `Th`, `Fr`, `Sa`, `Su`];
 const MONTHS = [`Jan`, `Feb`, `Mar`, `Apr`, `May`, `Jun`, `Jul`, `Aug`, `Sep`, `Oct`, `Nov`, `Dec`];
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -62,20 +63,10 @@ const createCard = () => ({
   tags: new Set(randomTags),
   picture: `http://picsum.photos/100/100?r=${createRandomNumber()}`,
   color: getRandomArrayItem(COLORS),
-  repeatingDays: {
-    Mo: getRandomBoolean(),
-    Tu: getRandomBoolean(),
-    We: getRandomBoolean(),
-    Th: getRandomBoolean(),
-    Fr: getRandomBoolean(),
-    Sa: getRandomBoolean(),
-    Su: getRandomBoolean()
-  },
+  repeatingDays: new Map(DAYS.map((day) => [day, getRandomBoolean()])),
   isFavorite: getRandomBoolean(),
   isDone: getRandomBoolean()
 });
 
 
 export const createCardsExample = (limit) => [...(new Array(limit)).keys()].map(() => createCard());
-
-
