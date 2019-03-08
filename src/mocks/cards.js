@@ -37,3 +37,44 @@ export const createCards = (limit) => (
     colors: chooseRandomArrayItems(cardParams.COLORS, createRandomNumber(0, cardParams.COLORS.length))
   }))
 );
+
+
+const TITLES = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
+const TAGS = [`homework`, `theory`, `practice`, `intensive`, `keks`];
+const TAG_NUMBER = {
+  MIN: 0,
+  MAX: 3
+};
+const COLORS = [`black`, `yellow`, `blue`, `green`, `pink`];
+const MILLY_SECONDS_PER_WEEK = 604800000;
+
+const createDeadline = () => {
+  const MONTHS = [`Jan`, `Feb`, `Mar`, `Apr`, `May`, `Jun`, `Jul`, `Aug`, `Sep`, `Oct`, `Nov`, `Dec`];
+  const now = new Date().getTime();
+  const deadline = new Date(createRandomNumber(now - MILLY_SECONDS_PER_WEEK, now + MILLY_SECONDS_PER_WEEK));
+  return `${deadline.getDay()} ${MONTHS[deadline.getMonth()]}`;
+};
+
+const createCard = () => ({
+  title: getRandomArrayItem(TITLES),
+  dueDate: createDeadline(),
+  tags: chooseRandomArrayItems(Array.from(new Set(TAGS).values()), createRandomNumber(TAG_NUMBER.MIN, TAG_NUMBER.MAX)),
+  picture: `http://picsum.photos/100/100?r=${createRandomNumber()}`,
+  color: getRandomArrayItem(COLORS),
+  repeatingDays: {
+    Mo: getRandomBoolean(),
+    Tu: getRandomBoolean(),
+    We: getRandomBoolean(),
+    Th: getRandomBoolean(),
+    Fr: getRandomBoolean(),
+    Sa: getRandomBoolean(),
+    Su: getRandomBoolean()
+  },
+  isFavorite: getRandomBoolean(),
+  isDone: getRandomBoolean()
+});
+
+
+export const createCardsExample = (limit) => [...(new Array(limit)).keys()].map(() => createCard());
+
+
