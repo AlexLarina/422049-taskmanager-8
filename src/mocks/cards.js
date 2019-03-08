@@ -17,6 +17,18 @@ const cardParams = {
   HASHTAGS: [`repeat`, `cinema`, `entertaiment`]
 };
 
+const TITLES = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
+const TAGS = [`homework`, `theory`, `practice`, `intensive`, `keks`];
+const TAG_NUMBER = {
+  MIN: 0,
+  MAX: 3
+};
+const COLORS = [`black`, `yellow`, `blue`, `green`, `pink`];
+const MONTHS = [`Jan`, `Feb`, `Mar`, `Apr`, `May`, `Jun`, `Jul`, `Aug`, `Sep`, `Oct`, `Nov`, `Dec`];
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+
+const randomTags = chooseRandomArrayItems(TAGS, createRandomNumber(TAG_NUMBER.MIN, TAG_NUMBER.MAX));
+
 export const createCards = (limit) => (
   [...(new Array(limit)).keys()].map(() => ({
     text: getRandomArrayItem(cardParams.TITLES),
@@ -38,27 +50,16 @@ export const createCards = (limit) => (
   }))
 );
 
-
-const TITLES = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
-const TAGS = [`homework`, `theory`, `practice`, `intensive`, `keks`];
-const TAG_NUMBER = {
-  MIN: 0,
-  MAX: 3
-};
-const COLORS = [`black`, `yellow`, `blue`, `green`, `pink`];
-const MILLY_SECONDS_PER_WEEK = 604800000;
-
 const createDeadline = () => {
-  const MONTHS = [`Jan`, `Feb`, `Mar`, `Apr`, `May`, `Jun`, `Jul`, `Aug`, `Sep`, `Oct`, `Nov`, `Dec`];
   const now = new Date().getTime();
-  const deadline = new Date(createRandomNumber(now - MILLY_SECONDS_PER_WEEK, now + MILLY_SECONDS_PER_WEEK));
+  const deadline = new Date(now + createRandomNumber(-WEEK_MS, WEEK_MS));
   return `${deadline.getDay()} ${MONTHS[deadline.getMonth()]}`;
 };
 
 const createCard = () => ({
   title: getRandomArrayItem(TITLES),
   dueDate: createDeadline(),
-  tags: chooseRandomArrayItems(Array.from(new Set(TAGS).values()), createRandomNumber(TAG_NUMBER.MIN, TAG_NUMBER.MAX)),
+  tags: new Set(randomTags),
   picture: `http://picsum.photos/100/100?r=${createRandomNumber()}`,
   color: getRandomArrayItem(COLORS),
   repeatingDays: {
