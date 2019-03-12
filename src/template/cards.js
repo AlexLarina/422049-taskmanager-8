@@ -37,7 +37,7 @@ const createDescriptionTemplate = (card) => (
       <textarea
         class="card__text"
         placeholder="Start typing your text here..."
-        name="text">${card.text}</textarea>
+        name="text">${card.title}</textarea>
     </label>
   </div>`
 );
@@ -52,16 +52,16 @@ const createColorBarTemplate = (card) => (
 
 const createDeadlineTemplate = (card) => (
   `<button class="card__date-deadline-toggle" type="button">
-    date: <span class="card__date-status">${card.deadline.status}</span>
+    date: <span class="card__date-status">${(card.dueDate.isEmpty) ? `no` : `yes`}</span>
   </button>
-  <fieldset class="card__date-deadline" ${card.deadline.status === `no` ? `disabled` : ``}>
+  <fieldset class="card__date-deadline" ${card.dueDate.isEmpty ? `disabled` : ``}>
     <label class="card__input-deadline-wrap">
       <input
         class="card__date"
         type="text"
         placeholder="23 September"
         name="date"
-        value="${card.deadline.date}"
+        value="${card.getDeadlineDate()}"
       />
     </label>
     <label class="card__input-deadline-wrap">
@@ -70,7 +70,7 @@ const createDeadlineTemplate = (card) => (
         type="text"
         placeholder="11:15 PM"
         name="time"
-        value="${card.deadline.time}"
+        value="${card.getDeadlineTime()}"
       />
     </label>
   </fieldset>`
@@ -78,11 +78,11 @@ const createDeadlineTemplate = (card) => (
 
 const createRepeatingDaysTemplate = (card, index) => (
   `<button class="card__repeat-toggle" type="button">
-    repeat:<span class="card__repeat-status">${card.isRepeat ? `yes` : `no`}</span>
+    repeat:<span class="card__repeat-status">${card.checkRepeatingDays() ? `yes` : `no`}</span>
   </button>
-  <fieldset class="card__repeat-days" ${card.isRepeat ? `` : `disabled`}>
+  <fieldset class="card__repeat-days" ${card.checkRepeatingDays() ? `` : `disabled`}>
     <div class="card__repeat-days-inner">
-    ${card.days.map((day) => (
+    ${[...card.repeatingDays.keys()].map((day) => (
     `<input
         class="visually-hidden card__repeat-day-input"
         type="checkbox"
@@ -117,16 +117,16 @@ const createHashtagButtonTemplate = (hashtag) => `
 const createHashtagTemplate = (card) => (
   `<div class="card__hashtag">
     <div class="card__hashtag-list">
-      ${card.hashtags
-        .map((hashtag) => (
+      ${[...card.tags.keys()]
+        .map((tag) => (
           `<span class="card__hashtag-inner">
           <input
             type="hidden"
             name="hashtag"
-            value="${hashtag}"
+            value="${tag}"
             class="card__hashtag-hidden-input"
           />
-          ${createHashtagButtonTemplate(hashtag)}
+          ${createHashtagButtonTemplate(tag)}
         </span>`
         ))
         .join(``)
@@ -158,34 +158,29 @@ const createPictureTemplate = (card) => (`
       name="img"
     />
     <img
-      src="${card.imgSource}"
+      src="${card.picture}"
       alt="task picture"
       class="card__img"
     />
   </label>
 `);
 
-const createColorsTemplate = (card) => (`
+const createColorsTemplate = (card, index) => (`
   <div class="card__colors-inner">
     <h3 class="card__colors-title">Color</h3>
     <div class="card__colors-wrap">
-      ${card.colors
-        .map((color) => (
-          `<input
+      <input
             type="radio"
-            id="color-${color}-4"
-            class="card__color-input card__color-input--${color} visually-hidden"
+            id="color-${card.color}-${index}"
+            class="card__color-input card__color-input--${card.color} visually-hidden"
             name="color"
-            value="${color}"
+            value="${card.color}"
           />
           <label
-            for="color-${color}-4"
-            class="card__color card__color--${color}"
-            >${color}</label
-          >`
-        ))
-        .join(``)
-  }
+            for="color-${card.color}-${index}"
+            class="card__color card__color--${card.color}"
+            >${card.color}
+          </label>
     </div>
   </div>
 `);
@@ -194,7 +189,7 @@ const createSettingsTemplate = (card, index) => (`
   <div class="card__settings">
     ${createDetailsTemplate(card, index)}
     ${createPictureTemplate(card)}
-    ${createColorsTemplate(card)}
+    ${createColorsTemplate(card, index)}
   </div>
 `);
 
@@ -208,7 +203,7 @@ const createStatusBtnTemplate = () => (`
 export const createCardsTemplate = (cards) => (
   cards
     .map((card, index) => (
-      `<article class="card ${(card.isEdit) ? `card--edit` : ``} card--${card.color} ${(card.isRepeat) ? `card--repeat` : ``} ${(card.isDeadline) ? `card--deadline` : ``}">
+      `<article class="card card--edit card--${card.color} ${card.checkRepeatingDays() ? `card--repeat` : ``} ${(card.isDeadline) ? `card--deadline` : ``}">
         <form class="card__form" method="get">
           <div class="card__inner">
             ${createControlTemplate()}
