@@ -13,7 +13,7 @@ const TAG_NUMBER = {
 };
 const COLORS = [`black`, `yellow`, `blue`, `green`, `pink`];
 const DAYS = [`Mo`, `Tu`, `We`, `Th`, `Fr`, `Sa`, `Su`];
-export const MONTHS = [`Jan`, `Feb`, `Mar`, `Apr`, `May`, `Jun`, `Jul`, `Aug`, `Sep`, `Oct`, `Nov`, `Dec`];
+const MONTHS = [`Jan`, `Feb`, `Mar`, `Apr`, `May`, `Jun`, `Jul`, `Aug`, `Sep`, `Oct`, `Nov`, `Dec`];
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
 const randomTags = chooseRandomArrayItems(TAGS, createRandomNumber(TAG_NUMBER.MIN, TAG_NUMBER.MAX));
@@ -21,8 +21,8 @@ const randomTags = chooseRandomArrayItems(TAGS, createRandomNumber(TAG_NUMBER.MI
 const createDeadline = () => {
   const now = new Date().getTime();
   const deadline = new Date(now + createRandomNumber(-WEEK_MS, WEEK_MS));
-  return deadline;
 
+  return deadline;
 };
 
 const createCard = () => ({
@@ -33,9 +33,14 @@ const createCard = () => ({
   color: getRandomArrayItem(COLORS),
   repeatingDays: new Map(DAYS.map((day) => [day, getRandomBoolean()])),
   isFavorite: getRandomBoolean(),
-  isDone: getRandomBoolean()
+  isDone: getRandomBoolean(),
+  getDeadlineDate() {
+    return `${this.dueDate.getDay()} ${MONTHS[this.dueDate.getMonth()]}`;
+  },
+  getDeadlineTime() {
+    return `${this.dueDate.getHours()}:${this.dueDate.getMinutes()}`;
+  }
 });
 
 
 export const createCards = (limit) => [...(new Array(limit)).keys()].map(() => createCard());
-

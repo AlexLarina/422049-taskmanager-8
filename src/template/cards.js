@@ -1,5 +1,3 @@
-import {MONTHS} from '../mocks/cards';
-
 const createControlTemplate = () => {
   const controls = [
     {
@@ -33,6 +31,17 @@ const createControlTemplate = () => {
   );
 };
 
+const checkRepeatingDays = (days) => {
+  let isRepeat = false;
+  for (const value of days) {
+    if (value === true) {
+      isRepeat = true;
+      break;
+    }
+  }
+  return isRepeat;
+};
+
 const createDescriptionTemplate = (card) => (
   `<div class="card__textarea-wrap">
     <label>
@@ -63,7 +72,7 @@ const createDeadlineTemplate = (card) => (
         type="text"
         placeholder="23 September"
         name="date"
-        value="${card.dueDate.getDay()} ${MONTHS[card.dueDate.getMonth()]}"
+        value="${card.getDeadlineDate()}"
       />
     </label>
     <label class="card__input-deadline-wrap">
@@ -72,7 +81,7 @@ const createDeadlineTemplate = (card) => (
         type="text"
         placeholder="11:15 PM"
         name="time"
-        value="${card.dueDate.getTime()}"
+        value="${card.getDeadlineTime()}"
       />
     </label>
   </fieldset>`
@@ -80,9 +89,9 @@ const createDeadlineTemplate = (card) => (
 
 const createRepeatingDaysTemplate = (card, index) => (
   `<button class="card__repeat-toggle" type="button">
-    repeat:<span class="card__repeat-status">${card.isRepeat ? `yes` : `no`}</span>
+    repeat:<span class="card__repeat-status">${checkRepeatingDays(card.repeatingDays.values()) ? `yes` : `no`}</span>
   </button>
-  <fieldset class="card__repeat-days" ${card.isRepeat ? `` : `disabled`}>
+  <fieldset class="card__repeat-days" ${checkRepeatingDays(card.repeatingDays.values()) ? `` : `disabled`}>
     <div class="card__repeat-days-inner">
     ${[...card.repeatingDays.keys()].map((day) => (
     `<input
@@ -202,21 +211,10 @@ const createStatusBtnTemplate = () => (`
   </div>
 `);
 
-const checkRepeatingDays = (days) => {
-  let isRepeat = false;
-  for (const value of days) {
-    if (value === true) {
-      isRepeat = true;
-      break;
-    }
-  }
-  return isRepeat;
-};
-
 export const createCardsTemplate = (cards) => (
   cards
     .map((card, index) => (
-      `<article class="card card--edit card--${card.color} ${(checkRepeatingDays(card.repeatingDays.values())) ? `card--repeat` : ``} ${(card.isDeadline) ? `card--deadline` : ``}">
+      `<article class="card card--edit card--${card.color} ${checkRepeatingDays(card.repeatingDays.values()) ? `card--repeat` : ``} ${(card.isDeadline) ? `card--deadline` : ``}">
         <form class="card__form" method="get">
           <div class="card__inner">
             ${createControlTemplate()}
