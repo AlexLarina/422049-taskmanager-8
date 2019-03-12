@@ -31,17 +31,6 @@ const createControlTemplate = () => {
   );
 };
 
-const checkRepeatingDays = (days) => {
-  let isRepeat = false;
-  for (const value of days) {
-    if (value === true) {
-      isRepeat = true;
-      break;
-    }
-  }
-  return isRepeat;
-};
-
 const createDescriptionTemplate = (card) => (
   `<div class="card__textarea-wrap">
     <label>
@@ -89,9 +78,9 @@ const createDeadlineTemplate = (card) => (
 
 const createRepeatingDaysTemplate = (card, index) => (
   `<button class="card__repeat-toggle" type="button">
-    repeat:<span class="card__repeat-status">${checkRepeatingDays(card.repeatingDays.values()) ? `yes` : `no`}</span>
+    repeat:<span class="card__repeat-status">${card.checkRepeatingDays() ? `yes` : `no`}</span>
   </button>
-  <fieldset class="card__repeat-days" ${checkRepeatingDays(card.repeatingDays.values()) ? `` : `disabled`}>
+  <fieldset class="card__repeat-days" ${card.checkRepeatingDays() ? `` : `disabled`}>
     <div class="card__repeat-days-inner">
     ${[...card.repeatingDays.keys()].map((day) => (
     `<input
@@ -214,7 +203,7 @@ const createStatusBtnTemplate = () => (`
 export const createCardsTemplate = (cards) => (
   cards
     .map((card, index) => (
-      `<article class="card card--edit card--${card.color} ${checkRepeatingDays(card.repeatingDays.values()) ? `card--repeat` : ``} ${(card.isDeadline) ? `card--deadline` : ``}">
+      `<article class="card card--edit card--${card.color} ${card.checkRepeatingDays() ? `card--repeat` : ``} ${(card.isDeadline) ? `card--deadline` : ``}">
         <form class="card__form" method="get">
           <div class="card__inner">
             ${createControlTemplate()}

@@ -39,6 +39,16 @@ const createCard = () => ({
   },
   getDeadlineTime() {
     return `${this.dueDate.getHours()}:${this.dueDate.getMinutes()}`;
+  },
+  checkRepeatingDays() {
+    let isRepeat = false;
+    for (const value of this.repeatingDays.values()) {
+      if (value === true) {
+        isRepeat = true;
+        break;
+      }
+    }
+    return isRepeat;
   }
 });
 
