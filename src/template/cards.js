@@ -200,20 +200,25 @@ const createStatusBtnTemplate = () => (`
   </div>
 `);
 
+export const createCardTemplate = (card, index) => (
+  `<article class="card card--edit card--${card.color} ${card.checkRepeatingDays() ? `card--repeat` : ``} ${(card.isDeadline) ? `card--deadline` : ``}">
+    <form class="card__form" method="get">
+      <div class="card__inner">
+        ${createControlTemplate()}
+        ${createColorBarTemplate(card)}
+        ${createDescriptionTemplate(card)}
+        ${createSettingsTemplate(card, index)}
+        ${createStatusBtnTemplate()}
+      </div>
+    </form>
+  </article>`
+);
+
 export const createCardsTemplate = (cards) => (
   cards
     .map((card, index) => (
-      `<article class="card card--edit card--${card.color} ${card.checkRepeatingDays() ? `card--repeat` : ``} ${(card.isDeadline) ? `card--deadline` : ``}">
-        <form class="card__form" method="get">
-          <div class="card__inner">
-            ${createControlTemplate()}
-            ${createColorBarTemplate(card)}
-            ${createDescriptionTemplate(card)}
-            ${createSettingsTemplate(card, index)}
-            ${createStatusBtnTemplate()}
-          </div>
-        </form>
-      </article>`
+      createCardTemplate(card, index)
     ))
     .join(``)
 );
+
