@@ -18,9 +18,9 @@ const createControlTemplate = () => {
     .map((control) => (
       `<button
         type="button"
-        class="card__btn card__btn--${control.name} ${(control.isDisabled) ? `disabled` : ``}">
-        ${control.name}
-      </button>`
+        class="card__btn card__btn--${control.name} ${(control.isDisabled) ? `disabled` : ``}"
+        >${control.name}</button>
+        `
     ))
     .join(``);
 
@@ -52,9 +52,9 @@ const createColorBarTemplate = (card) => (
 
 const createDeadlineTemplate = (card) => (
   `<button class="card__date-deadline-toggle" type="button">
-    date: <span class="card__date-status">${(card.dueDate.isEmpty) ? `no` : `yes`}</span>
+    date: <span class="card__date-status">no</span>
   </button>
-  <fieldset class="card__date-deadline" ${card.dueDate.isEmpty ? `disabled` : ``}>
+  <fieldset class="card__date-deadline" disabled>
     <label class="card__input-deadline-wrap">
       <input
         class="card__date"
@@ -78,9 +78,9 @@ const createDeadlineTemplate = (card) => (
 
 const createRepeatingDaysTemplate = (card, index) => (
   `<button class="card__repeat-toggle" type="button">
-    repeat:<span class="card__repeat-status">${card.checkRepeatingDays() ? `yes` : `no`}</span>
+    repeat:<span class="card__repeat-status">no</span>
   </button>
-  <fieldset class="card__repeat-days" ${card.checkRepeatingDays() ? `` : `disabled`}>
+  <fieldset class="card__repeat-days" disabled>
     <div class="card__repeat-days-inner">
     ${[...card.repeatingDays.keys()].map((day) => (
     `<input
@@ -151,7 +151,7 @@ const createDetailsTemplate = (card, index) => (`
 `);
 
 const createPictureTemplate = (card) => (`
-  <label class="card__img-wrap">
+  <label class="card__img-wrap card__img-wrap--empty">
     <input
       type="file"
       class="card__img-input visually-hidden"
@@ -201,7 +201,7 @@ const createStatusBtnTemplate = () => (`
 `);
 
 export const createCardTemplate = (card, index) => (
-  `<article class="card card--edit card--${card.color} ${card.checkRepeatingDays() ? `card--repeat` : ``} ${(card.isDeadline) ? `card--deadline` : ``}">
+  `<article class="card card--${card.color}">
     <form class="card__form" method="get">
       <div class="card__inner">
         ${createControlTemplate()}

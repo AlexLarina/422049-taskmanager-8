@@ -2,7 +2,6 @@ import Task from './components/task';
 import TaskEdit from './components/task-edit';
 
 import {createFiltersTemplate} from '../src/template/filters';
-// import {createCardsTemplate} from '../src/template/cards';
 
 import {createCards} from '../src/mocks/cards';
 import {createFilters} from '../src/mocks/filters';
@@ -16,7 +15,6 @@ const filterContainerElement = document.querySelector(`.main__filter`);
 const cardsContainerElement = document.querySelector(`.board__tasks`);
 
 filterContainerElement.innerHTML = createFiltersTemplate(filters);
-// cardsContainerElement.innerHTML = createCardsTemplate(cards);
 
 cards.forEach((card) => {
   const task = new Task(card);
