@@ -10,9 +10,9 @@ import {
 
 const createDeadlineTemplate = (card) => (
   `<button class="card__date-deadline-toggle" type="button">
-    date: <span class="card__date-status">no</span>
+    date: <span class="card__date-status">${(card.dueDate.isEmpty) ? `no` : `yes`}</span>
   </button>
-  <fieldset class="card__date-deadline" disabled>
+  <fieldset class="card__date-deadline" ${card.dueDate.isEmpty ? `disabled` : ``}>
     <label class="card__input-deadline-wrap">
       <input
         class="card__date"
@@ -36,9 +36,9 @@ const createDeadlineTemplate = (card) => (
 
 const createRepeatingDaysTemplate = (card, index) => (
   `<button class="card__repeat-toggle" type="button">
-    repeat:<span class="card__repeat-status">no</span>
+    repeat:<span class="card__repeat-status">${card.checkRepeatingDays() ? `yes` : `no`}</span>
   </button>
-  <fieldset class="card__repeat-days" disabled>
+  <fieldset class="card__repeat-days" ${card.checkRepeatingDays() ? `` : `disabled`}>
     <div class="card__repeat-days-inner">
     ${[...card.repeatingDays.keys()].map((day) => (
     `<input
@@ -56,10 +56,10 @@ const createRepeatingDaysTemplate = (card, index) => (
   </fieldset>`
 );
 
-const createDatesTemplate = (card) => (`
+const createDatesTemplate = (card, index) => (`
   <div class="card__dates">
     ${createDeadlineTemplate(card)}
-    ${createRepeatingDaysTemplate(card)}
+    ${createRepeatingDaysTemplate(card, index)}
   </div>`
 );
 
@@ -78,8 +78,8 @@ const createSettingsTemplate = (card, index) => (`
   </div>
 `);
 
-export const createCardTemplate = (card, index) => (
-  `<article class="card card--${card.color}">
+export const createCardEditTemplate = (card, index) => (
+  `<article class="card card--edit card--${card.color} ">
     <form class="card__form" method="get">
       <div class="card__inner">
         ${createControlTemplate()}
@@ -91,12 +91,3 @@ export const createCardTemplate = (card, index) => (
     </form>
   </article>`
 );
-
-export const createCardsTemplate = (cards) => (
-  cards
-    .map((card, index) => (
-      createCardTemplate(card, index)
-    ))
-    .join(``)
-);
-
