@@ -4,7 +4,7 @@ import createElement from '../lib/create-element';
 export default class Component {
   constructor(data) {
     if (new.target === Component) {
-      throw new Error(`Can't instantiate Component, only concrete one.`);
+      throw new Error(`Can't create an instance of a base component`);
     }
 
     this._data = cloneDeep(data);
