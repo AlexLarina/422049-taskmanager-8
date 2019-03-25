@@ -1,24 +1,49 @@
+import Component from './component';
 import {createCardEditTemplate} from '../template/card-edit';
-import createElement from '../create-element';
 
-export default class TaskEdit {
+export default class TaskEdit extends Component {
   constructor(data) {
-    this._data = data;
+    super(data);
 
-    this._element = null;
+    this.submitCallback = null;
+    this.deleteCallback = null;
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   get template() {
     return createCardEditTemplate(this._data);
   }
 
-  render() {
-    this._element = createElement(this.template);
-
-    return this._element;
+  createEventListeners() {
+    this._element.querySelector(`.card__save`).addEventListener(`submit`, this.handleSubmit);
+    this._element.querySelector(`.card__delete`).addEventListener(`click`, this.handleDelete);
   }
 
-  unrender() {
-    this._element = null;
+  removeEventListeners() {
+    this._element.querySelector(`.card__save`).removeEventListener(`submit`, this.handleSubmit);
+    this._element.querySelector(`.card__delete`).removeEventListener(`click`, this.handleDelete);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    if (this.submitCallback) {
+      this.submitCallback();
+    }
+  }
+
+  handleDelete() {
+    if (this.deleteCallback) {
+      this.deleteCallback();
+    }
+  }
+
+  onSubmit(callback) {
+    this.submitCallback = callback;
+  }
+
+  onDelete(callback) {
+    this.deleteCallback = callback;
   }
 }

@@ -3,7 +3,7 @@ import {
   getRandomBoolean,
   createRandomNumber,
   chooseRandomArrayItems
-} from '../random';
+} from '../lib/random';
 
 const TITLES = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
 const TAGS = [`homework`, `theory`, `practice`, `intensive`, `keks`];

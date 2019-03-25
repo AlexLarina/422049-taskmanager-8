@@ -1,13 +1,12 @@
+import Component from './component';
 import {createCardTemplate} from '../template/cards';
-import createElement from '../create-element';
 
-export default class Task {
+export default class Task extends Component {
   constructor(data) {
-    this._data = data;
+    super(data);
 
     this.clickCallback = null;
     this.handleClick = this.handleClick.bind(this);
-    this._element = null;
   }
 
   get template() {
@@ -30,17 +29,5 @@ export default class Task {
 
   onClick(callback) {
     this.clickCallback = callback;
-  }
-
-  render() {
-    this._element = createElement(this.template);
-    this.createEventListeners();
-
-    return this._element;
-  }
-
-  unrender() {
-    this.removeEventListeners();
-    this._element = null;
   }
 }

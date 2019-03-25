@@ -1,4 +1,4 @@
-import {getRandomArrayItem, createRandomNumber} from '../random';
+import {getRandomArrayItem, createRandomNumber} from '../lib/random';
 
 const NAMES = [`all`, `overdue`, `today`, `favourites`, `tags`, `archive`];
 const STATES = [`checked`, `disabled`, ``];
