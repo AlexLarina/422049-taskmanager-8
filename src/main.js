@@ -16,9 +16,9 @@ const cardsContainerElement = document.querySelector(`.board__tasks`);
 
 filterContainerElement.innerHTML = createFiltersTemplate(filters);
 
-cards.forEach((card, index) => {
-  const task = new Task(card, index);
-  const taskEdit = new TaskEdit(card, index);
+cards.forEach((card) => {
+  const task = new Task(card);
+  const taskEdit = new TaskEdit(card);
 
   let taskElement = task.render();
   let taskEditElement;
@@ -30,6 +30,17 @@ cards.forEach((card, index) => {
     cardsContainerElement.replaceChild(taskEditElement, taskElement);
     task.unrender();
   });
+
+  taskEdit.onSubmit(() => {
+    cardsContainerElement.replaceChild(taskElement, taskEditElement);
+    taskEdit.unrender();
+  });
+
+  taskEdit.onDelete(() => {
+    cardsContainerElement.removeChild(taskEditElement);
+    taskEdit.unrender();
+  });
+
 });
 
 
